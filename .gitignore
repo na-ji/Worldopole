@@ -8,6 +8,7 @@
 ehthumbs.db
 Thumbs.db
 *~
+.idea
 
 # IDE files #
 #############
@@ -30,3 +31,5 @@ config.php
 /core/json/captcha.stats.json
 /core/json/nests.stats.json
 analyticstracking.php
+
+/vendor/

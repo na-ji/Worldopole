@@ -18,6 +18,14 @@ define('SYS_DB_PSWD', '#SYS_DB_PSWD#');
 define('SYS_DB_HOST', '#SYS_DB_HOST#');
 // mysql server port
 define('SYS_DB_PORT', 3306);
+// discord client id
+define('SYS_DISCORD_CLIENT_ID', '#SYS_DISCORD_CLIENT_ID#');
+// discord client secret
+define('SYS_DISCORD_CLIENT_SECRET', '#SYS_DISCORD_CLIENT_SECRET#');
+// discord redirect URL
+define('SYS_DISCORD_REDIRECT_URL', '#SYS_DISCORD_REDIRECT_URL#');
+// discord server ID
+define('SYS_DISCORD_SERVER_ID', '#SYS_DISCORD_SERVER_ID#');
 
 
 # Please, do not touch me, I'm fine ;)
