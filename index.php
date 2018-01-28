@@ -65,34 +65,36 @@ include_once('discord.php');
 								$text	= $menu->text;
 							}
 
-							switch ($menu->type) {
-								case 'link':
-									?>
+							if (!in_array($menu->href, $config_secret->pages_requiring_full_access) || $_SESSION['has_full_access']) {
+								switch ($menu->type) {
+									case 'link':
+										?>
 
-									<li>
-										<a href="<?= $menu->href ?>" class="menu-label"><i class="fa <?= $menu->icon ?>" aria-hidden="true"></i> <?= $text ?></a>
-									</li>
+										<li>
+											<a href="<?= $menu->href ?>" class="menu-label"><i class="fa <?= $menu->icon ?>" aria-hidden="true"></i> <?= $text ?></a>
+										</li>
 
-									<?php
-									break;
+										<?php
+										break;
 
-								case 'link_external':
-									?>
+									case 'link_external':
+										?>
 
-									<li>
-										<a href="<?= $menu->href ?>" target="_blank" class="menu-label"><i class="fa <?= $menu->icon ?>" aria-hidden="true"></i> <?= $menu->text ?></a>
-									</li>
+										<li>
+											<a href="<?= $menu->href ?>" target="_blank" class="menu-label"><i class="fa <?= $menu->icon ?>" aria-hidden="true"></i> <?= $menu->text ?></a>
+										</li>
 
-									<?php
-									break;
+										<?php
+										break;
 
-								case 'html':
-									?>
+									case 'html':
+										?>
 
-									<li> <?= $menu->value ?> </li>
+										<li> <?= $menu->value ?> </li>
 
-									<?php
-									break;
+										<?php
+										break;
+								}
 							}
 						}
 						?>
@@ -109,8 +111,13 @@ include_once('discord.php');
 				$file = SYS_PATH.'/pages/'.$page.'.page.php';
 
 				if (is_file($file)) {
-					echo '<!-- Page :: '.$page.' -->';
-					include($file);
+					if (!in_array($page, $config_secret->pages_requiring_full_access) || $_SESSION['has_full_access']) {
+						echo '<!-- Page :: '.$page.' -->';
+						include($file);
+					} else {
+						http_response_code(403);
+						echo "Access denied :(";
+					}
 				} else {
 					include('pages/home.page.php');
 				}

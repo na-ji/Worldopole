@@ -5,7 +5,10 @@
 
 $variables = SYS_PATH.'/core/json/variables.json';
 $config = json_decode(file_get_contents($variables));
-    
+
+$variables_secret = SYS_PATH.'/core/json/variables.secret.json';
+$config_secret = json_decode(file_get_contents($variables_secret));
+
 $pokedex_tree_file = file_get_contents(SYS_PATH.'/core/json/pokedex.tree.json');
 $trees = json_decode($pokedex_tree_file);
 
@@ -13,7 +16,7 @@ if (!defined('SYS_PATH')) {
 	echo 'Error: config.php does not exist or failed to load.<br>';
 	echo 'Check whether you renamed the config.example.php file!';
 	exit();
-} 
+}
 if (!isset($config->system)) {
 	echo 'Error: Could not load core/json/variables.json.<br>';
 	echo 'json_last_error(): '.json_last_error().'<br>';
@@ -174,7 +177,7 @@ if (!empty($page)) {
 				}
 			}
 			sort($related);
-			
+
 			// Top50 Pokemon List
 			// Don't run the query for super common pokemon because it's too heavy
 			if ($pokemon->spawn_rate < 0.20) {
@@ -200,16 +203,16 @@ if (!empty($page)) {
 					$top[] = $data;
 				}
 			}
-			
+
 			// Trainer with highest Pokemon
-			
+
 			// Make it sortable but use different variable names this time; default sort: cp DESC
 			$best_possible_sort = array('trainer_name', 'IV', 'cp', 'move_1', 'move_2', 'last_seen');
 			$best_order = isset($_GET['order']) ? $_GET['order'] : '';
 			$best_order_by = in_array($best_order, $best_possible_sort) ? $_GET['order'] : 'cp';
 			$best_direction = isset($_GET['direction']) ? 'ASC' : 'DESC';
 			$best_direction = !isset($_GET['order']) && !isset($_GET['direction']) ? 'DESC' : $best_direction;
-			
+
 			$trainer_blacklist = "";
 			if (!empty($config->system->trainer_blacklist)) {
 				$trainer_blacklist = " AND trainer_name NOT IN ('".implode("','", $config->system->trainer_blacklist)."')";
@@ -222,13 +225,13 @@ if (!empty($page)) {
 					GROUP BY pokemon_uid
 					ORDER BY $best_order_by $best_direction, trainer_name ASC
 					LIMIT 0,50";
-			
+
 			$result = $mysqli->query($req);
 			$toptrainer = array();
 			while ($data = $result->fetch_object()) {
 				$toptrainer[] = $data;
 			}
-			
+
 			break;
 
 		// Pokedex
