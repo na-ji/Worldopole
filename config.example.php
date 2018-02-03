@@ -18,6 +18,8 @@ define('SYS_DB_PSWD', '#SYS_DB_PSWD#');
 define('SYS_DB_HOST', '#SYS_DB_HOST#');
 // mysql server port
 define('SYS_DB_PORT', 3306);
+// discord toggle
+define('SYS_ENABLE_DISCORD_AUTH', false);
 // discord client id
 define('SYS_DISCORD_CLIENT_ID', '#SYS_DISCORD_CLIENT_ID#');
 // discord client secret

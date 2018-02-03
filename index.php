@@ -65,7 +65,7 @@ include_once('discord.php');
 								$text	= $menu->text;
 							}
 
-							if (!in_array($menu->href, $config_secret->pages_requiring_full_access) || $_SESSION['has_full_access']) {
+							if (!SYS_ENABLE_DISCORD_AUTH || !in_array($menu->href, $config_secret->pages_requiring_full_access) || $_SESSION['has_full_access']) {
 								switch ($menu->type) {
 									case 'link':
 										?>
@@ -111,7 +111,7 @@ include_once('discord.php');
 				$file = SYS_PATH.'/pages/'.$page.'.page.php';
 
 				if (is_file($file)) {
-					if (!in_array($page, $config_secret->pages_requiring_full_access) || $_SESSION['has_full_access']) {
+					if (!SYS_ENABLE_DISCORD_AUTH || !in_array($page, $config_secret->pages_requiring_full_access) || $_SESSION['has_full_access']) {
 						echo '<!-- Page :: '.$page.' -->';
 						include($file);
 					} else {
