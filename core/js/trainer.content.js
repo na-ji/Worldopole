@@ -174,68 +174,45 @@ function printPokemon(pokemon, pokeimg_suffix, iv_numbers, locale) {
 	var progressBar;
 	if (iv_numbers) {
 		progressBar = $('<div>', { class: 'progress' }).css({ 'height': '15px', 'margin-bottom': '0', 'position': 'relative' });
+	} else {
+		progressBar = $('<div>', { class: 'progress' }).css({ 'height': '6px', 'margin-bottom': '0' });
+	}
+	progressBar.append(
+		$('<div>', {
+			title: locale.ivAttack + ' :' + pokemon.iv_attack,
+			class: 'progress-bar progress-bar-danger',
+			role: 'progressbar',
+			'aria-valuenow': pokemon.iv_attack,
+			'aria-valuemin': 0,
+			'aria-valuemax': 45
+		}).css('width', ((100 / 45) * pokemon.iv_attack) + '%'));
+	progressBar.append(
+		$('<div>', {
+			title: locale.ivDefense + ' :' + pokemon.iv_defense,
+			class: 'progress-bar progress-bar-info',
+			role: 'progressbar',
+			'aria-valuenow': pokemon.iv_defense,
+			'aria-valuemin': 0,
+			'aria-valuemax': 45
+		}).css('width', ((100 / 45) * pokemon.iv_defense) + '%'));
+	progressBar.append(
+		$('<div>', {
+			title: locale.ivStamina + ' :' + pokemon.iv_stamina,
+			class: 'progress-bar progress-bar-success',
+			role: 'progressbar',
+			'aria-valuenow': pokemon.iv_stamina,
+			'aria-valuemin': 0,
+			'aria-valuemax': 45
+		}).css('width', ((100 / 45) * pokemon.iv_stamina) + '%'));
+
+	if (iv_numbers) {
 		var ivTotal = Math.round((parseInt(pokemon.iv_attack) + parseInt(pokemon.iv_defense) + parseInt(pokemon.iv_stamina)) / 45 * 100);
-		progressBar.append(
-			$('<div>', {
-				title: locale.ivAttack + ' :' + pokemon.iv_attack,
-				class: 'progress-bar progress-bar-danger',
-				role: 'progressbar',
-				'aria-valuenow': pokemon.iv_attack,
-				'aria-valuemin': 0,
-				'aria-valuemax': 45
-			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }));
-		progressBar.append(
-			$('<div>', {
-				title: locale.ivDefense + ' :' + pokemon.iv_defense,
-				class: 'progress-bar progress-bar-info',
-				role: 'progressbar',
-				'aria-valuenow': pokemon.iv_defense,
-				'aria-valuemin': 0,
-				'aria-valuemax': 45
-			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }));
-		progressBar.append(
-			$('<div>', {
-				title: locale.ivStamina + ' :' + pokemon.iv_stamina,
-				class: 'progress-bar progress-bar-success',
-				role: 'progressbar',
-				'aria-valuenow': pokemon.iv_stamina,
-				'aria-valuemin': 0,
-				'aria-valuemax': 45
-			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }));
 		progressBar.append(
 			$('<div>', {
 				text: ivTotal + ' %'
 			}).css({'position': 'absolute', 'text-align': 'center', 'width': '100%', 'color': 'white', 'text-shadow': '0px 0px 2px black', 'margin-top': '-2px'}));
-	} else {
-		progressBar = $('<div>', { class: 'progress' }).css({ 'height': '6px', 'margin-bottom': '0' });
-		progressBar.append(
-			$('<div>', {
-				title: locale.ivAttack + ' :' + pokemon.iv_attack,
-				class: 'progress-bar progress-bar-danger',
-				role: 'progressbar',
-				'aria-valuenow': pokemon.iv_attack,
-				'aria-valuemin': 0,
-				'aria-valuemax': 45
-			}).css('width', ((100 / 45) * pokemon.iv_attack) + '%'))
-		progressBar.append(
-			$('<div>', {
-				title: locale.ivDefense + ' :' + pokemon.iv_defense,
-				class: 'progress-bar progress-bar-info',
-				role: 'progressbar',
-				'aria-valuenow': pokemon.iv_defense,
-				'aria-valuemin': 0,
-				'aria-valuemax': 45
-			}).css('width', ((100 / 45) * pokemon.iv_defense) + '%'))
-		progressBar.append(
-			$('<div>', {
-				title: locale.ivStamina + ' :' + pokemon.iv_stamina,
-				class: 'progress-bar progress-bar-success',
-				role: 'progressbar',
-				'aria-valuenow': pokemon.iv_stamina,
-				'aria-valuemin': 0,
-				'aria-valuemax': 45
-			}).css('width', ((100 / 45) * pokemon.iv_stamina) + '%'))
 	}
+
 	trainerPokemon.append(progressBar);
 
 	if (pokemon.deployment_time) {
