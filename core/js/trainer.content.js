@@ -155,14 +155,19 @@ function printTrainer(trainer, trainerIndex, pokeimg_suffix, iv_numbers, locale)
 
 function printPokemon(pokemon, pokeimg_suffix, iv_numbers, locale) {
 	var trainerPokemon = $('<div>', { id: 'trainerPokemon_' + pokemon.pokemon_uid, class: 'col-md-1 col-xs-4 pokemon-single', style: 'text-align: center' });
-	var gymClass = '';
+	var gymClass = '', alt = '';
 	if (pokemon.gym_id === null) {
 		gymClass = 'unseen';
+	}
+	if (pokemon.gym_name !== null) {
+		alt = pokemon.gym_name;
 	}
 	trainerPokemon.append(
 		$('<a>', { href: 'pokemon/' + pokemon.pokemon_id }).append($('<img />', {
 			src: 'core/pokemons/' + pokemon.pokemon_id + pokeimg_suffix,
-			'class': 'img-responsive ' + gymClass
+			'class': 'img-responsive ' + gymClass,
+			alt: alt,
+			title: alt
 		}))
 	);
 	trainerPokemon.append($('<p>', { class: 'pkmn-name' }).append(pokemon.cp));
