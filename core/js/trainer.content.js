@@ -171,39 +171,41 @@ function printPokemon(pokemon, pokeimg_suffix, iv_numbers, locale) {
 		}))
 	);
 	trainerPokemon.append($('<p>', { class: 'pkmn-name' }).append(pokemon.cp));
-	var progressBar
+	var progressBar;
 	if (iv_numbers) {
-		progressBar = $('<div>', { class: 'progress' }).css({ 'height': '15px', 'margin-bottom': '0' });
+		progressBar = $('<div>', { class: 'progress' }).css({ 'height': '15px', 'margin-bottom': '0', 'position': 'relative' });
+		var ivTotal = Math.round((parseInt(pokemon.iv_attack) + parseInt(pokemon.iv_defense) + parseInt(pokemon.iv_stamina)) / 45 * 100);
 		progressBar.append(
 			$('<div>', {
 				title: locale.ivAttack + ' :' + pokemon.iv_attack,
 				class: 'progress-bar progress-bar-danger',
 				role: 'progressbar',
-				text: pokemon.iv_attack,
 				'aria-valuenow': pokemon.iv_attack,
 				'aria-valuemin': 0,
 				'aria-valuemax': 45
-			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }))
+			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }));
 		progressBar.append(
 			$('<div>', {
 				title: locale.ivDefense + ' :' + pokemon.iv_defense,
 				class: 'progress-bar progress-bar-info',
 				role: 'progressbar',
-				text: pokemon.iv_defense,
 				'aria-valuenow': pokemon.iv_defense,
 				'aria-valuemin': 0,
 				'aria-valuemax': 45
-			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }))
+			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }));
 		progressBar.append(
 			$('<div>', {
 				title: locale.ivStamina + ' :' + pokemon.iv_stamina,
 				class: 'progress-bar progress-bar-success',
 				role: 'progressbar',
-				text: pokemon.iv_stamina,
 				'aria-valuenow': pokemon.iv_stamina,
 				'aria-valuemin': 0,
 				'aria-valuemax': 45
-			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }))
+			}).css({ 'width': (100 / 3) + '%', 'line-height': '16px' }));
+		progressBar.append(
+			$('<div>', {
+				text: ivTotal + ' %'
+			}).css({'position': 'absolute', 'text-align': 'center', 'width': '100%', 'color': 'white', 'text-shadow': '0px 0px 2px black', 'margin-top': '-2px'}));
 	} else {
 		progressBar = $('<div>', { class: 'progress' }).css({ 'height': '6px', 'margin-bottom': '0' });
 		progressBar.append(
@@ -235,6 +237,7 @@ function printPokemon(pokemon, pokeimg_suffix, iv_numbers, locale) {
 			}).css('width', ((100 / 45) * pokemon.iv_stamina) + '%'))
 	}
 	trainerPokemon.append(progressBar);
+
 	if (pokemon.deployment_time) {
 		var diff = (new Date() - new Date(pokemon.deployment_time.replace(/-/g, '/'))) / 1000;
 		trainerPokemon.append($('<small>', { text: parseInt(diff / 3600) + 'h ' + parseInt((diff / 60) % 60) + 'm' }));
@@ -243,5 +246,6 @@ function printPokemon(pokemon, pokeimg_suffix, iv_numbers, locale) {
 	} else {
 		trainerPokemon.append($('<small>', { text: pokemon.last_scanned + ' ' + locale.days }));
 	}
+
 	return trainerPokemon;
 }
