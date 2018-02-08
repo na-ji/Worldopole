@@ -51,7 +51,7 @@ function initDiscordAuth()
 
 		$_SESSION['has_full_access'] = $isGrantedFullAccess;
 		$_SESSION['access_token'] = json_encode($token->jsonSerialize());
-		header('Location: '.$_SERVER['PHP_SELF']);
+		header('Location: '.SYS_DISCORD_REDIRECT_URL);
 	}
 
 	if ($_SESSION['access_token']) {
